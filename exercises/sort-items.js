@@ -12,6 +12,7 @@
  */
 
 // Your code goes here...
+const allItems = document.querySelectorAll('.item');
 
 
 
@@ -23,6 +24,7 @@
  */
 
 // Your code goes here...
+const sortBtn = document.querySelectorAll('.sortBtn');
 
 
 
@@ -38,6 +40,21 @@
  */
 
 // Your code goes here...
+function sortData(direction) {
+  const container = document.getElementById('main');
+  const newArray = Array.from(allItems);
+  function sortItems(a, b) {
+    if (direction === 'asc') {
+      if (a.innerHTML < b.innerHTML) return 1;
+      else if (a.innerHTML > b.innerHTML) return -1;
+      else return 0;
+    } else if (direction === 'desc') {
+      if (a.innerHTML > b.innerHTML) return 1;
+      else if (a.innerHTML < b.innerHTML) return -1;
+      else return 0;
+    }
+  }
+}
 
 
 
@@ -50,5 +67,4 @@
  */
 
 // Your code goes here...
-
 
