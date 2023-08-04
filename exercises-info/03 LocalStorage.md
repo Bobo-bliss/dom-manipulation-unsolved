@@ -29,10 +29,10 @@ To find the local/session storage data you need to:
 localStorage.setItem("MyList", "Tom");
 
 // Get the string value of a localStorage item by a key
-const list = localStorage.getItem("MyList");
+const list = localStorage.getItem("MyList"); 
 
 // Remove the property and the value from localStorage
-localStorage.removeItem("MyList");
+localStorage.removeItem("MyList"); 
 
 // Wipe out the current localStorage contents
 localStorage.clear();

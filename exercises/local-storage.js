@@ -11,6 +11,7 @@
  * Event delegation MUST be used
  */
 
+
 /**
  * @task
  * Implement the 'click' event that solves several tasks by the item click:
@@ -38,3 +39,53 @@
  */
 
 // Your code goes here...
+const container = document.querySelector('.cardsContainer');
+
+function turnCardRed(cardId) {
+  const item = document.getElementById(cardId);
+    if (item) {
+      item.style.background = 'red';
+    }
+}
+
+turnCardRed();
+
+function addToFavorites(cardId) {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  if (!favorites.includes(cardId)) {
+    favorites.push(cardId);
+    localStorage.setItem('favorites', JSON.stringify(favorites)) || [];
+  }
+}
+
+function RemoveFromFavorites(cardId) {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const updatedFavorites = favorites.filter((id) => id !== cardId);
+  localStorage.setItem('favorites', JSON.stringify(updatedFavorites)) || [];
+}
+
+function updateLocalStorage(cardId) {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  if (!favorites.includes(cardId)) {
+    addToFavorites(cardId);
+    turnCardRed(cardId);
+  } else {
+    removeFromFavorites(cardId);
+    turnCardRed(cardId);
+  }
+}
+
+function clickedCardEvent(event) {
+  const clickedCard = event.target;
+  
+  if (Array.from(clickedCard.classList).includes('card')) {
+    if (clickedCard.style.background === '') {
+      clickedCard.style.background = 'red';
+    } else {
+      clickedCard.style.background = '';
+    }
+    updateLocalStorage(clickedCard.id);
+  }
+}
+
+container.addEventListener('click', clickedCardEvent);
