@@ -40,38 +40,52 @@
 
 // Your code goes here...
 const container = document.querySelector('.cardsContainer');
+const allCards = document.querySelectorAll('.card');
 
 function turnCardRed(cardId) {
-  const item = document.getElementById(cardId);
+  const favorites = JSON.parse(localStorage.getItem('favorites'));
+  if (favorites.includes(cardId)) {
+    const item = document.getElementById(cardId);
     if (item) {
       item.style.background = 'red';
     }
+  } else {
+    const item = document.getElementById(cardId);
+    if (item) {
+      item.style.background = '';
+    }
+  }
 }
 
-turnCardRed();
+for (const card of allCards) {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  if (favorites.includes(card.id)) {
+    turnCardRed(card.id);
+  }
+}
 
 function addToFavorites(cardId) {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   if (!favorites.includes(cardId)) {
     favorites.push(cardId);
     localStorage.setItem('favorites', JSON.stringify(favorites)) || [];
+    turnCardRed(cardId);
   }
 }
 
-function RemoveFromFavorites(cardId) {
+function removeFromFavorites(cardId) {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const updatedFavorites = favorites.filter((id) => id !== cardId);
   localStorage.setItem('favorites', JSON.stringify(updatedFavorites)) || [];
+  turnCardRed(cardId);
 }
 
 function updateLocalStorage(cardId) {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   if (!favorites.includes(cardId)) {
     addToFavorites(cardId);
-    turnCardRed(cardId);
   } else {
     removeFromFavorites(cardId);
-    turnCardRed(cardId);
   }
 }
 
@@ -79,11 +93,6 @@ function clickedCardEvent(event) {
   const clickedCard = event.target;
   
   if (Array.from(clickedCard.classList).includes('card')) {
-    if (clickedCard.style.background === '') {
-      clickedCard.style.background = 'red';
-    } else {
-      clickedCard.style.background = '';
-    }
     updateLocalStorage(clickedCard.id);
   }
 }
